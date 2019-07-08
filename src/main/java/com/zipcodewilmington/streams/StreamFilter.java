@@ -5,7 +5,9 @@ import com.zipcodewilmington.streams.anthropoid.PersonFactory;
 import com.zipcodewilmington.streams.tools.RandomUtils;
 import com.zipcodewilmington.streams.tools.StringUtils;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,11 +18,18 @@ public class StreamFilter {
     private final Stream<Person> personStream;
     public final String startingCharacter;
 
+    public static Character randomLetter() {
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Random r = new Random();
+        return alphabet.charAt(r.nextInt(26));
+    }
+
     /**
      * No arg constructor
      */ //TODO - construct person stream of 100 person objects; startingCharacter is a random capital letter
     public StreamFilter() {
-        this(Stream.empty(), null);
+
+        this(new PersonFactory().createPersonStream(100),randomLetter());
     }
 
     /**
@@ -28,7 +37,8 @@ public class StreamFilter {
      * @param startingCharacter - character to filter by
      */ //TODO
     public StreamFilter(Person[] people, Character startingCharacter) {
-        this(Stream.empty(), null);
+
+        this(Arrays.stream(people),startingCharacter);
     }
 
     /**
@@ -36,7 +46,7 @@ public class StreamFilter {
      * @param startingCharacter - character to filter by
      */ //TODO
     public StreamFilter(List<Person> people, Character startingCharacter) {
-        this(Stream.empty(), null);
+        this(people.stream(),startingCharacter);
     }
 
 
